@@ -1,0 +1,7 @@
+restart: 0
+
+image:
+  tag: 0.8.3
+
+ingress:
+  domainName: qa1-sg.cld

@@ -1,0 +1,37 @@
+####
+application:
+  name: cerebro
+  namespace: common
+  replicaCount: 1
+  healthCheck: /
+  livenessInitialDelaySeconds: 3600
+  livenessPeriodSeconds: 10
+  livenessTimeoutSeconds: 10
+  livenessFailureThreshold: 6
+  containerPort: 9000
+
+artifact:
+  id: static-nginx
+  directory: com/gdn/static-nginx
+
+hpa:
+  enabled: false
+
+image:
+  repository: lmenezes/cerebro
+
+tolerations:
+  - key: role
+    operator: Equal
+    value: statefulset-1236-gke1500
+    effect: NoSchedule
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: role
+          operator: In
+          values:
+            - statefulset-1236-gke1500
